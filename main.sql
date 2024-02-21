@@ -40,6 +40,37 @@ WHERE location_type = 'Parking Lots (Apt., Commercial Or Non-Commercial)'
 	AND occ_year >= '2014'
 GROUP BY occ_year, location_type
 ORDER BY occ_year;
+
+-- Comparing the amount of auto theft per year
+
+SELECT
+	occ_year,
+	COUNT(*) AS auto_theft_occ,
+	COUNT(*) - LAG(COUNT(*)) OVER(ORDER BY occ_year) AS auto_theft_diff
+FROM auto_theft_open_data
+WHERE occ_year >= '2014'
+GROUP BY occ_year;
+
+-- What month had the highest thefts for each year?
+
+SELECT 
+	occ_year,
+	occ_month,
+	COUNT(*) AS auto_theft_per_month,
+	FIRST_VALUE(occ_month) OVER (
+		PARTITION BY occ_year
+		ORDER BY COUNT(*) DESC 
+	) AS highest_month_theft
+FROM auto_theft_open_data
+WHERE occ_year >= '2014'
+GROUP BY occ_year, occ_month;
+
+	
+	
+
+
+
+
 	
 	
 
