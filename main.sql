@@ -65,6 +65,24 @@ FROM auto_theft_open_data
 WHERE occ_year >= '2014'
 GROUP BY occ_year, occ_month;
 
+-- What is the average auto theft per month?
+
+WITH monthly_theft AS (
+	SELECT 
+		occ_year,
+		occ_month,
+		COUNT(*) AS theft_per_month
+	FROM auto_theft_open_data
+	WHERE occ_year >= '2014'
+	GROUP BY occ_year, occ_month
+	ORDER BY occ_year
+)
+
+SELECT 
+	occ_month as month,
+	FLOOR(AVG(theft_per_month)) AS avg_theft_per_month
+FROM monthly_theft
+GROUP BY occ_month;
 	
 	
 
