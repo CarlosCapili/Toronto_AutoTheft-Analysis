@@ -3,6 +3,7 @@ This project takes the public dataset from the Toronto police about auto thefts 
 1. Where do auto thefts happen the most in 2023?
    
    ![image](https://github.com/CarlosCapili/TorontoAutoTheftSQLAnalysis/assets/59804756/b827bc96-6dbb-46e7-b816-30caf63842d6)
+   
    ![image](https://github.com/CarlosCapili/TorontoAutoTheftSQLAnalysis/assets/59804756/613ff3a6-73d1-4cdf-a383-49b0fb2fda0a)
 
 
