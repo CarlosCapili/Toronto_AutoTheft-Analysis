@@ -17,36 +17,50 @@
 -- ORDER BY occ_year, thefts DESC;
 
 -- What location has the highest auto thefts per year?
-WITH ordered_theft_loc AS (
-	SELECT
-		occ_year,
-		location_type,
-		COUNT(*) AS thefts,
-		ROW_NUMBER() OVER(PARTITION BY occ_year ORDER BY COUNT(*) DESC) AS rn
-	FROM auto_theft_open_data
-	WHERE occ_year >= 2014
-	GROUP BY occ_year, location_type
-	ORDER BY occ_year, thefts DESC
-)
-
-SELECT 
-	occ_year,
-	location_type,
-	thefts
-FROM ordered_theft_loc
-WHERE rn = 1;
-
--- -- Show the progression of theft occurances of the highest theft location by year
+-- WITH ordered_theft_loc AS (
+-- 	SELECT
+-- 		occ_year,
+-- 		location_type,
+-- 		COUNT(*) AS thefts,
+-- 		ROW_NUMBER() OVER(PARTITION BY occ_year ORDER BY COUNT(*) DESC) AS rn
+-- 	FROM auto_theft_open_data
+-- 	WHERE occ_year >= 2014
+-- 	GROUP BY occ_year, location_type
+-- 	ORDER BY occ_year, thefts DESC
+-- )
 
 -- SELECT 
 -- 	occ_year,
 -- 	location_type,
--- 	COUNT(*) AS theft_occ
--- FROM auto_theft_open_data
--- WHERE location_type = 'Parking Lots (Apt., Commercial Or Non-Commercial)'
--- 	AND occ_year >= '2014'
--- GROUP BY occ_year, location_type
--- ORDER BY occ_year;
+-- 	thefts
+-- FROM ordered_theft_loc
+-- WHERE rn = 1;
+
+-- Show the increase/decrease percentage of auto thefts in parking lots per year
+WITH theft_diff AS (
+	SELECT 
+		occ_year,
+		location_type,
+		COUNT(*) AS thefts,
+		LAG(COUNT(*)) OVER(ORDER BY occ_year) AS prev_thefts,
+		COUNT(*) - LAG(COUNT(*)) OVER(ORDER BY occ_year) AS difference
+	FROM auto_theft_open_data
+	WHERE location_type = 'Parking Lots (Apt., Commercial Or Non-Commercial)'
+		AND occ_year >= 2014
+	GROUP BY occ_year, location_type
+	ORDER BY occ_year
+)
+
+SELECT
+	occ_year,
+	location_type,
+	thefts,
+	CASE
+		WHEN difference < 0 THEN CONCAT(ROUND(ABS(difference)::numeric / prev_thefts * 100.0, 2), '% decrease')
+		WHEN difference > 0 THEN CONCAT(ROUND(ABS(difference)::numeric / prev_thefts * 100.0, 2), '% increase')
+		ELSE 'No change'
+	END AS pct_inc_dec
+FROM theft_diff;
 
 -- -- Comparing the amount of auto theft per year
 
