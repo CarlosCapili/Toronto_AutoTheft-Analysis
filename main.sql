@@ -71,6 +71,40 @@ SELECT
 	END AS pct_inc_dec
 FROM theft_diff;
 
+-- How many auto thefts happen in residential or commercial areas per year?
+SELECT
+	occ_year,
+	SUM(CASE WHEN premises_type = 'House' OR premises_type = 'Apartment' THEN 1 END) AS residential,
+	SUM(CASE WHEN premises_type = 'Commercial' THEN 1 END) AS commercial,
+	SUM(CASE WHEN premises_type = 'Outside' THEN 1 END) AS other
+FROM auto_theft_open_data
+WHERE occ_year >= 2014
+GROUP BY occ_year
+ORDER BY occ_year;
+
+-- What are the percentages of residential and commercial auto thefts per year?
+WITH premise_theft AS (
+	SELECT
+		occ_year,
+		SUM(CASE WHEN premises_type = 'House' OR premises_type = 'Apartment' THEN 1 END) AS residential,
+		SUM(CASE WHEN premises_type = 'Commercial' THEN 1 END) AS commercial,
+		SUM(CASE WHEN premises_type = 'Outside' THEN 1 END) AS other
+	FROM auto_theft_open_data
+	WHERE occ_year >= 2014
+	GROUP BY occ_year
+	ORDER BY occ_year
+)
+
+SELECT
+	occ_year,
+	residential,
+	commercial,
+	other,
+	ROUND((residential::numeric / (residential + commercial + other) * 100), 1) AS residential_pct,
+	ROUND((commercial::numeric / (residential + commercial + other) * 100), 1) AS commercial_pct,
+	ROUND((other::numeric / (residential + commercial + other) * 100), 1) AS other_pct
+FROM premise_theft
+
 -- How many thefts happen per month per year?
 SELECT 
 	occ_year,
