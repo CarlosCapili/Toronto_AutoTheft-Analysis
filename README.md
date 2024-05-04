@@ -6,7 +6,7 @@ This project takes the public dataset provided by the Toronto police about auto 
 - PowerShell (Using Git for version control on Windows 10)
 
 ### PowerBI Dashboard
-The data was taken over a reporting period from 2014 to 2023. Below the dashboard shows basic trends such as theft by week, month, year, as well as whether it was stolen on a residential or commercial property.
+The data was taken over a reporting period from 2014 to 2023. Below the dashboard shows basic trends such as theft by week, month, year, as well as whether it was stolen on a residential or commercial property. I modelled this dashboard after the dashboard the Toronto Police department made.
 ![image](https://github.com/CarlosCapili/Toronto_AutoTheft-Analysis/assets/59804756/234673f9-07df-4a3d-9f62-cc8efb56af26)
 
 ### Takeaways
