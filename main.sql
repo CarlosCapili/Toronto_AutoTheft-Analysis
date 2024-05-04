@@ -177,6 +177,39 @@ SELECT
 FROM numbered_monthly_theft
 GROUP BY occ_year;
 
+-- Show the neighbourhoods the thefts happen in
+SELECT
+	occ_year
+	hood_158,
+	neighbourhood_158,
+	COUNT(*) AS thefts
+FROM auto_theft_open_data
+WHERE occ_year >= '2014'
+GROUP BY occ_year, hood_158, neighbourhood_158
+ORDER BY occ_year, thefts DESC;
+
+-- What are the top 3 neighbourhoods that auto theft takes place per year
+WITH top3_hoods AS 
+( 
+	SELECT
+		occ_year,
+		hood_158,
+		neighbourhood_158,
+		COUNT(*) AS thefts,
+		ROW_NUMBER() OVER(PARTITION BY occ_year ORDER BY COUNT(*) DESC) AS rn
+	FROM auto_theft_open_data
+	WHERE occ_year >= '2014'
+	GROUP BY occ_year, hood_158, neighbourhood_158
+	ORDER BY occ_year, thefts DESC
+)
+
+SELECT
+	occ_year,
+	hood_158,
+	neighbourhood_158,
+	thefts
+FROM top3_hoods
+WHERE rn IN (1, 2, 3);
 
 	
 	
