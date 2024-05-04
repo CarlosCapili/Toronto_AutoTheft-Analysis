@@ -12,4 +12,4 @@ The data was taken over a reporting period from 2014 to 2023. Below the dashboar
 ### Takeaways
 - Parking lots are the number one location of thefts between 2014-19 and 2023, while homes were the number one location between 2020-22
 - In 2014, residential areas accounted for 27.7% of thefts, in 2023 it accounts for 38.8% and will likely continue to increase in the coming years
-
+- 1 West Humber-Clairville ranks as the number 1 neighbourhood with the most auto thefts from 2014-2023
