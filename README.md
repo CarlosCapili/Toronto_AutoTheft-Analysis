@@ -7,7 +7,8 @@ This project takes the public dataset provided by the Toronto police about auto 
 
 ### PowerBI Dashboard
 The data was taken over a reporting period from 2014 to 2023. Below the dashboard shows basic trends such as theft by week, month, year, as well as whether it was stolen on a residential or commercial property. I modelled this dashboard after the dashboard the Toronto Police department made.
-![image](https://github.com/CarlosCapili/Toronto_AutoTheft-Analysis/assets/59804756/234673f9-07df-4a3d-9f62-cc8efb56af26)
+![image](https://github.com/CarlosCapili/Toronto_AutoTheft-Analysis/assets/59804756/6344ce30-69d2-4c02-88db-15e8acfcaaec)
+
 
 ### Takeaways
 - Parking lots are the number one location of thefts between 2014-19 and 2023, while homes were the number one location between 2020-22
